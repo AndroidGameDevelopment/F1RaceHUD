@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.withStyle
+
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.graphics.Color
@@ -52,6 +56,7 @@ import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.googlefonts.isAvailableOnDevice
 import android.util.Log
+import com.codaers.f1racehud.ui.theme.Iceberg
 
 
 val provider = GoogleFont.Provider(
@@ -394,9 +399,21 @@ fun HomeScreen(
 
                         // Copyright / Footer
                         Text(
-                            text = "© 2025 CodÆrs. All rights reserved.",
+                            text = buildAnnotatedString {
+                                append("© 2025 ")
+
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontFamily = Iceberg
+                                    )
+                                ) {
+                                    append("CODÆRS")
+                                }
+
+                                append(". All rights reserved.")
+                            },
                             color = Color.Gray,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = MaterialTheme.typography.bodyMedium,
                             textAlign = TextAlign.Center
                         )
 
