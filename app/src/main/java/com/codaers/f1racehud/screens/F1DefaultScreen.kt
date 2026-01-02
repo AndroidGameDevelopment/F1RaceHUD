@@ -89,7 +89,7 @@ fun F1DefaultScreen(viewModel: TelemetryViewModel) {
             )
 
             Text(
-                text = "1243$rpm RPM",
+                text = "$rpm RPM",
                 style = TextStyle(color = Color.White, fontSize = 38.sp),
                 color = Color.White,
                 modifier = Modifier.align(Alignment.CenterEnd).padding(end = 10.dp) // ← RIGHT ALIGN

@@ -53,6 +53,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.googlefonts.isAvailableOnDevice
 import android.util.Log
 
+
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
     providerPackage = "com.google.android.gms",
@@ -393,7 +394,7 @@ fun HomeScreen(
 
                         // Copyright / Footer
                         Text(
-                            text = "© 2025 Karlo. All rights reserved.",
+                            text = "© 2025 CodÆrs. All rights reserved.",
                             color = Color.Gray,
                             style = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center
