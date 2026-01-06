@@ -105,11 +105,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.ktx)
 
-    // Google Fonts (now works with FontProvider)
-    //implementation(platform(libs.androidx.compose.bom))
     implementation(libs.google.fonts)
-
-
 
     // Material Components
     implementation(libs.material)

@@ -1,30 +1,27 @@
 # 🏎️ F1 Race HUD
 
-A modern, real‑time Formula 1 telemetry HUD for Android
-F1 Race HUD is a high‑performance Android application that displays live Formula 1 telemetry in a clean, motorsport‑authentic interface.
-It is designed for enthusiasts, sim racers, engineers, and anyone who wants a precise, minimal‑latency view of race data — without clutter, gimmicks, or distractions.
-This project focuses on accuracy, explicit packet handling, and pixel‑perfect UI refinement, following the official F1 game UDP telemetry specifications.
+F1RaceHUD is a modern, real‑time telemetry companion for F1 23, F1 24, and F1 25.
+Attach your phone to your wheel or cockpit and get a clean, fast, and responsive HUD while driving. The app receives telemetry directly from the game using the official F1 UDP specifications and displays detailed, motorsport‑authentic dashboards with all available data.
+Designed for enthusiasts, sim racers, and engineers, F1RaceHUD delivers a precise, minimal‑latency view of race information — without clutter, gimmicks, or distractions. It’s built for performance, accuracy, and pixel‑perfect UI refinement, making it ideal for racing, practice sessions, and improving consistency.
 
 # 🚀 Features
 
-## ✅ Real‑time Telemetry
+## Real‑time Telemetry
 - Live data from the official F1 game UDP stream
 - Explicit, version‑specific packet parsing (F1 2021 → F1 25)
 - Zero renaming, zero abstraction leaks — 1:1 field mapping
 - Unified internal models for stable app‑side consumption
 
-## ✅ Motorsport‑Authentic HUD
+## Motorsport‑Authentic HUD
 - Clean, readable, race‑inspired design
-- High‑contrast color palette optimized for track visibility
 - Dynamic widgets: speed, gear, ERS, DRS, RPM, throttle, brake, tyre data, and more
 - Smooth animations with Compose UI
 
-## ✅ Version‑Aware Architecture
+## Version‑Aware Architecture
 - Each F1 game version has its own explicit packet classes
-- No guessing, no magic, no hidden conversions
 - Easy to update when Codemasters releases new specs
 
-## ✅ Built for Performance
+## Built for Performance
 - Kotlin + Jetpack Compose
 - Coroutines for efficient streaming
 - Minimal allocations during packet parsing
@@ -45,8 +42,9 @@ Contributions are welcome — especially:
 - Bug fixes
   Please open an issue before submitting a PR so we can align on the approach.
 
+
 # 📄 License
-Link to license
+This project is licensed under the terms of the [LICENSE](./LICENSE) file.
 
 # ⭐ Support the Project
 If you enjoy the app, consider starring the repository.
