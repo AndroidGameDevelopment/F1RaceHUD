@@ -29,7 +29,7 @@ Designed for enthusiasts, sim racers, and engineers, F1RaceHUD delivers a precis
 
 ## 📸 Screenshots
 
-![F1 Race HUD](doc/screenshots/Screenshot_01.png)
+![F1 Race HUD](docs/screenshots/Screenshot_01.png)
 
 
 
