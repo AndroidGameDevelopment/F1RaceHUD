@@ -27,10 +27,9 @@ Designed for enthusiasts, sim racers, and engineers, F1RaceHUD delivers a precis
 - Minimal allocations during packet parsing
 - Optimized for 60–120Hz displays
 
-📸 Screenshots
-(Add your images here once the repo is public)
-![HUD Screenshot](docs/screenshot_1.jpg)
-![Telemetry View](docs/screenshot_2.jpg)
+## 📸 Screenshots
+
+![F1 Race HUD](doc/screenshots/Screenshot_01.png)
 
 
 
