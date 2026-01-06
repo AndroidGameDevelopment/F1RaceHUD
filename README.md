@@ -37,67 +37,6 @@ This project focuses on accuracy, explicit packet handling, and pixel‑perfect 
 
 
 
-# 📦 Installation
-From Release (recommended)
-Download the latest APK from the Releases section.
-From Source
-git clone https://github.com/yourname/f1-race-hud.git
-cd f1-race-hud
-./gradlew assembleDebug
-
-
-
-# 🧩 How It Works
-🛰️ Telemetry Input
-The app listens for UDP packets broadcast by the F1 game on PC/console.
-You must enable:
-Settings → Telemetry Settings → UDP Telemetry → ON
-Then configure:
-- UDP Port: 20777 (default)
-- Format: Legacy or 2021+ (depending on game version)
-- IP Address: Your Android device’s local IP
-  🧱 Packet Parsing
-  Each game version has its own folder:
-  telemetry/
-  f1_2021/
-  f1_2022/
-  f1_2023/
-  f1_2024/
-  f1_2025/
-
-
-Inside each folder:
-- PacketXxxData.kt — explicit data classes
-- PacketXxxParser.kt — strict byte‑level parsing
-- No renaming, no commentary, no assumptions
-  🎨 UI Layer
-  Compose UI renders:
-- Speed & gear cluster
-- ERS/DRS indicators
-- Tyre temps & wear
-- Delta & lap timing
-- Flags & session state
-  All components are modular and reusable.
-
-# 🛠️ Tech Stack
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-
-
-
-# 📚 Roadmap
-- [ ] Multi‑car spectator mode
-- [ ] Customizable HUD layouts
-- [ ] Telemetry recording & playback
-- [ ] WearOS companion app
-- [ ] Live delta comparison overlays
-- [ ] F1 25 full packet support (in progress)
-
 # 🤝 Contributing
 Contributions are welcome — especially:
 - Packet updates for new F1 game versions
@@ -107,11 +46,7 @@ Contributions are welcome — especially:
   Please open an issue before submitting a PR so we can align on the approach.
 
 # 📄 License
-Choose a license that fits your goals. Common options:
-- MIT — permissive, simple
-- Apache 2.0 — permissive + patent protection
-- GPLv3 — strong copyleft
-  Add your chosen license as LICENSE in the repo root.
+Link to license
 
 # ⭐ Support the Project
 If you enjoy the app, consider starring the repository.
@@ -131,3 +66,10 @@ To build the project from source, follow these steps:
 5. After the sync completes, select a device or emulator.
 6. Click Run to build and launch the app using the default debug configuration.
 
+# 📦 Installation
+From Release (recommended)
+Download the latest APK from the Releases section.
+From Source
+git clone https://github.com/yourname/f1-race-hud.git
+cd f1-race-hud
+./gradlew assembleDebug
