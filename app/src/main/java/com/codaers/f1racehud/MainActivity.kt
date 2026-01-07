@@ -61,7 +61,7 @@ fun MainApp(viewModel: TelemetryViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("F1 Dashboard", color = Color.White) },
+                title = { Text("F1 RAW Telemetry", color = Color.White) },
                 navigationIcon = {
                     Box {
                         IconButton(onClick = { menuExpanded = true }) {
