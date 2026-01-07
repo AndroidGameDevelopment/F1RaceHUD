@@ -57,6 +57,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.googlefonts.isAvailableOnDevice
 import android.util.Log
 import com.codaers.f1racehud.ui.theme.Iceberg
+import androidx.compose.ui.platform.LocalConfiguration
+
+
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.Brush
+
+import kotlin.math.cos
+import kotlin.math.sin
+import androidx.compose.ui.geometry.Offset
 
 
 val provider = GoogleFont.Provider(
@@ -124,6 +137,11 @@ class HomeActivity : ComponentActivity() {
     }
 }
 
+data class MenuEntry(
+    val label: String,
+    val icon: ImageVector,
+    val onClick: () -> Unit
+)
 
 @Composable
 fun HomeScreen(
@@ -132,6 +150,7 @@ fun HomeScreen(
     onRaceHudClick: () -> Unit,
     onExitClick: () -> Unit
 ) {
+
     val backgroundPainter = painterResource(id = R.drawable.home_background)
 
     var showInstructions by remember { mutableStateOf(false) }
@@ -160,7 +179,8 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = stringResource(id = R.string.app_name),
@@ -172,85 +192,103 @@ fun HomeScreen(
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 140.dp),
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                item {
-                    MenuButton(
-                        "Race HUD",
-                        Icons.Filled.Flag,
-                        onClick = {
-                            selectedMenu = "Race HUD"
-                            onRaceHudClick()
-                        },
-                        highlight = selectedMenu == "Race HUD"
-                    )
+            val menuItems = listOf(
+                MenuEntry( "Race HUD", Icons.Filled.Flag ) {
+                    selectedMenu = "Race HUD"
+                    onRaceHudClick()
+                },
+                MenuEntry( "Telemetry", Icons.AutoMirrored.Filled.ShowChart ) {
+                    selectedMenu = "Telemetry"
+                    onTelemetryClick()
+                    GlobalState.activePacketIDs.value = PacketGroups.F1telemetryScreenPackets
+                },
+                MenuEntry( "F1 Default", Icons.Filled.Speed ) {
+                    selectedMenu = "F1 Default"
+                    onF1DefaultClick()
+                },
+                MenuEntry( "About", Icons.Filled.DirectionsCar ) {
+                    selectedMenu = "About"
+                    showAbout = true
+                },
+                MenuEntry( "Settings", Icons.Filled.Settings ) {
+                    selectedMenu = "Settings"
+                    showInstructions = true
+                },
+                MenuEntry( "Exit App", Icons.AutoMirrored.Filled.ExitToApp ) {
+                    selectedMenu = "Exit App"
+                    onExitClick()
                 }
+            )
 
-                item {
-                    MenuButton(
-                        "Telemetry",
-                        Icons.AutoMirrored.Filled.ShowChart,
-                        onClick = {
-                            selectedMenu = "Telemetry"
-                            onTelemetryClick()
-                            GlobalState.activePacketIDs.value = PacketGroups.F1telemetryScreenPackets
-                        },
-                        highlight = selectedMenu == "Telemetry"
-                    )
+            val config = LocalConfiguration.current
+            val isLandscape =
+                config.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+
+            if (!isLandscape) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    items(menuItems.size) { index ->
+                        val item = menuItems[index]
+                        MenuButton(
+                            item.label,
+                            item.icon,
+                            onClick = item.onClick,
+                            highlight = selectedMenu == item.label
+                        )
+                    }
                 }
+            }
+            else {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Spacer(Modifier.height(22.dp))
 
-                item {
-                    MenuButton(
-                        "F1 Default",
-                        Icons.Filled.Speed,
-                        onClick = {
-                            selectedMenu = "F1 Default"
-                            onF1DefaultClick()
-                        },
-                        highlight = selectedMenu == "F1 Default"
-                    )
-                }
+                    // FIRST ROW (4 items)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(24.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        menuItems.take(4).forEach { item ->
+                            Box(Modifier.size(140.dp)) {
+                                MenuButton(
+                                    item.label,
+                                    item.icon,
+                                    onClick = item.onClick,
+                                    highlight = selectedMenu == item.label
+                                )
+                            }
+                        }
+                    }
 
-                item {
-                    MenuButton(
-                        "About",
-                        Icons.Filled.DirectionsCar,
-                        onClick = {
-                            selectedMenu = "About"
-                            showAbout = true
-                        },
-                        highlight = selectedMenu == "About"
-                    )
-                }
-                
-
-                item {
-                    MenuButton(
-                        "Settings",
-                        Icons.Filled.Settings,
-                        onClick = {
-                            selectedMenu = "Settings"
-                            showInstructions = true
-                        },
-                        highlight = selectedMenu == "Settings"
-                    )
-                }
-
-                item {
-                    MenuButton(
-                        "Exit App",
-                        Icons.AutoMirrored.Filled.ExitToApp,
-                        onClick = {
-                            selectedMenu = "Exit App"
-                            onExitClick()
-                        },
-                        highlight = selectedMenu == "Exit App"
-                    )
+                    // SECOND ROW (2 centered items)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        menuItems.drop(4).forEach { item ->
+                            Box(
+                                Modifier
+                                    .padding(horizontal = 12.dp)
+                                    .size(140.dp)
+                            ) {
+                                MenuButton(
+                                    item.label,
+                                    item.icon,
+                                    onClick = item.onClick,
+                                    highlight = selectedMenu == item.label
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -434,6 +472,24 @@ fun HomeScreen(
 
     }
 }
+fun rotatedBrush(angleDegrees: Float): Brush {
+    val rad = Math.toRadians(angleDegrees.toDouble())
+    val x = cos(rad).toFloat()
+    val y = sin(rad).toFloat()
+
+    return Brush.linearGradient(
+        colors = listOf(
+            Color(0xFF2F2F2F),
+            Color(0xFF383838),
+            Color(0xFF2A2A2A),
+            Color(0xFF3E3E3E),
+            Color(0xFF323232)
+        ),
+        start = Offset.Zero,
+        end = Offset(x * 1000f, y * 1000f),
+        tileMode = TileMode.Mirror
+    )
+}
 
 @Composable
 fun MenuButton(
@@ -446,17 +502,55 @@ fun MenuButton(
     val contentColor = Color(0xFFFF6F00)
     val backgroundColor = Color(0xFF000000).copy(alpha = 0.5f)
 
+    // Procedural noise brush (no Offset needed)
+    val noiseBrush = remember {
+        Brush.linearGradient(
+            colors = listOf(
+                Color(0xFF2F2F2F),
+                Color(0xFF383838),
+                Color(0xFF2A2A2A),
+                Color(0xFF3E3E3E),
+                Color(0xFF323232)
+            ),
+            start = Offset.Zero,
+            end = Offset(800f, 300f), // ← rotation direction
+            tileMode = TileMode.Mirror
+        )
+    }
+
+
+
     OutlinedButton(
         onClick = onClick,
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = backgroundColor,
             contentColor = contentColor
         ),
-        border = BorderStroke(2.dp, borderColor),
+        border = BorderStroke(0.dp, Color.Transparent), // we draw our own border
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)   // slightly taller for vertical layout
+            .height(100.dp)
+            .drawBehind {
+                val radius = 12.dp.toPx()
+                val strokeWidth = 3.dp.toPx()
+
+                if (highlight) {
+                    // Clean bright border
+                    drawRoundRect(
+                        color = borderColor,
+                        cornerRadius = CornerRadius(radius),
+                        style = Stroke(width = strokeWidth)
+                    )
+                } else {
+                    // Textured / scattered border
+                    drawRoundRect(
+                        brush = noiseBrush,
+                        cornerRadius = CornerRadius(radius),
+                        style = Stroke(width = strokeWidth)
+                    )
+                }
+            }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -467,7 +561,7 @@ fun MenuButton(
                 imageVector = icon,
                 contentDescription = label,
                 tint = contentColor,
-                modifier = Modifier.size(40.dp)   // ✅ fixed icon size
+                modifier = Modifier.size(40.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -492,3 +586,5 @@ fun getLocalIp(): String {
     }
     return "Unknown"
 }
+
+
