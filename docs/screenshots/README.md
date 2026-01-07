@@ -17,7 +17,7 @@ A wide view of the main dashboard showing the core UI layout.
 
 ### Settings Panel
 <p align="center">
-  <img src="Screenshot_02.png" width="100%" alt="Settings Panel">
+  <img src="Screenshot_03.png" width="100%" alt="Settings Panel">
 </p>
 Full-width screenshot of the settings interface.
 
@@ -26,7 +26,7 @@ Full-width screenshot of the settings interface.
 
 ### Login & Authentication
 <p float="left">
-  <img src="Screenshot_03.png" width="48%" alt="Login Screen">
+  <img src="Screenshot_02.png" width="48%" alt="Login Screen">
   <img src="Screenshot_04.png" width="48%" alt="Authentication Screen">
 </p>
 Two portrait screens showing the login and authentication flow.
