@@ -1,8 +1,8 @@
 # 🏎️ F1 Race HUD
 
-F1RaceHUD is a modern, real‑time telemetry companion for F1 23, F1 24, and F1 25.
-Attach your phone to your wheel or cockpit and get a clean, fast, and responsive HUD while driving. The app receives telemetry directly from the game using the official F1 UDP specifications and displays detailed, motorsport‑authentic dashboards with all available data.
-Designed for enthusiasts, sim racers, and engineers, F1RaceHUD delivers a precise, minimal‑latency view of race information — without clutter, gimmicks, or distractions. It’s built for performance, accuracy, and pixel‑perfect UI refinement, making it ideal for racing, practice sessions, and improving consistency.
+F1RaceHUD is a modern, real‑time telemetry companion for F1 23, F1 24, and F1 25 games.  
+Attach your phone to your wheel or cockpit and get a clean, fast, and responsive HUD while driving. The app receives telemetry directly from the game using the official F1 UDP stream and displays detailed, motorsport‑authentic dashboards with all available data.
+Designed for sim racers enthusiasts F1RaceHUD delivers a precise, minimal‑latency view of race information — without clutter, gimmicks, or distractions. It’s built for performance and accuracy making it ideal for racing.
 
 # 🚀 Features
 
@@ -25,13 +25,9 @@ Designed for enthusiasts, sim racers, and engineers, F1RaceHUD delivers a precis
 - Kotlin + Jetpack Compose
 - Coroutines for efficient streaming
 - Minimal allocations during packet parsing
-- Optimized for 60–120Hz displays
 
 ## 📸 Screenshots
-
 ![F1 Race HUD](docs/screenshots/Screenshot_01.png)
-
-
 
 # 🤝 Contributing
 Contributions are welcome — especially:
@@ -40,7 +36,6 @@ Contributions are welcome — especially:
 - Performance optimizations
 - Bug fixes
   Please open an issue before submitting a PR so we can align on the approach.
-
 
 # 📄 License
 This project is licensed under the terms of the [LICENSE](./LICENSE) file.
