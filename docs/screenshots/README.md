@@ -1,32 +1,25 @@
 # Screenshots
 
-Below are the app screenshots, arranged so that:
-- Landscape images appear one per row
-- Portrait images appear two per row
-- Each screenshot includes a short title and description
 
 
-## Landscape
+## Dashboards
 
-### Dashboard Overview
+### F1 Race HUD
 <p align="center">
-  <img src="Screenshot_01.png" width="100%" alt="Dashboard Overview">
+  <img src="Screenshot_01.png" width="100%" alt="F1 Race HUD">
 </p>
-A wide view of the main dashboard showing the core UI layout.
+F1 Race HUD
 
 
-### Settings Panel
+### F1 Default
 <p align="center">
-  <img src="Screenshot_03.png" width="100%" alt="Settings Panel">
+  <img src="Screenshot_03.png" width="100%" alt="F1 Default">
 </p>
-Full-width screenshot of the settings interface.
+F1 Default
 
 
-## Portrait
-
-### Login & Authentication
+### Home Screen & RAW Telemetry screen
 <p float="left">
-  <img src="Screenshot_02.png" width="48%" alt="Login Screen">
-  <img src="Screenshot_04.png" width="48%" alt="Authentication Screen">
+  <img src="Screenshot_02.png" width="48%" alt="Home Screen">
+  <img src="Screenshot_04.png" width="48%" alt="RAW Telemetry Screen">
 </p>
-Two portrait screens showing the login and authentication flow.
