@@ -67,9 +67,20 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Brush
 
-import kotlin.math.cos
-import kotlin.math.sin
+import kotlin.random.Random
+
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.LinearEasing
+
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.animation.core.animateFloatAsState
+import kotlinx.coroutines.delay
+import androidx.compose.animation.core.snap
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.TransformOrigin
 
 
 val provider = GoogleFont.Provider(
@@ -175,6 +186,7 @@ fun HomeScreen(
             contentScale = ContentScale.Crop
         )
 
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -182,15 +194,86 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontFamily = Orbitron,
-                    fontWeight = FontWeight.W700
-                ),
-                color = Color.White,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
+            // --- Per-letter animation block ---
+            val title = stringResource(id = R.string.app_name)
+            val letters = title.toList()
+
+            var start by remember { mutableStateOf(false) }
+            val intervalMillis = 10000L
+
+            LaunchedEffect(Unit) {
+                while (true) {
+                    start = false
+                    delay(10)
+                    start = true
+                    delay(intervalMillis)
+                }
+            }
+
+            val durationPerLetter = 250
+            val overshoot = 1.15f
+
+            Box(
+                modifier = Modifier.padding(bottom = 32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+
+                // --- Dummy static title behind the animated one to prevent blink ---
+                Row(horizontalArrangement = Arrangement.Center) {
+                    letters.forEach { char ->
+                        Text(
+                            text = char.toString(),
+                            style = MaterialTheme.typography.headlineLarge.copy(
+                                fontFamily = Orbitron,
+                                fontWeight = FontWeight.W700
+                            ),
+                            color = Color.White
+                        )
+                    }
+                }
+
+                // --- Animated title on top ---
+                Row(horizontalArrangement = Arrangement.Center) {
+                    letters.forEachIndexed { index, char ->
+
+                        val delay = index * 80
+
+                        val scale by animateFloatAsState(
+                            targetValue = if (start) 1f else 0f,
+                            animationSpec = if (start) {
+                                tween(
+                                    durationMillis = durationPerLetter,
+                                    delayMillis = delay,
+                                    easing = { t ->
+                                        if (t < 0.5f) {
+                                            1f + (overshoot - 1f) * (t / 0.5f)
+                                        } else {
+                                            overshoot - (overshoot - 1f) * ((t - 0.5f) / 0.5f)
+                                        }
+                                    }
+                                )
+                            } else {
+                                snap()
+                            },
+                            label = "letterMagnify"
+                        )
+
+                        Text(
+                            text = char.toString(),
+                            style = MaterialTheme.typography.headlineLarge.copy(
+                                fontFamily = Orbitron,
+                                fontWeight = FontWeight.W700
+                            ),
+                            color = Color.White,
+                            modifier = Modifier.graphicsLayer {
+                                scaleX = scale
+                                scaleY = scale
+                                transformOrigin = TransformOrigin.Center
+                            }
+                        )
+                    }
+                }
+            }
 
             val menuItems = listOf(
                 MenuEntry( "Race HUD", Icons.Filled.Flag ) {
@@ -472,53 +555,76 @@ fun HomeScreen(
 
     }
 }
-fun rotatedBrush(angleDegrees: Float): Brush {
-    val rad = Math.toRadians(angleDegrees.toDouble())
-    val x = cos(rad).toFloat()
-    val y = sin(rad).toFloat()
-
-    return Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF2F2F2F),
-            Color(0xFF383838),
-            Color(0xFF2A2A2A),
-            Color(0xFF3E3E3E),
-            Color(0xFF323232)
-        ),
-        start = Offset.Zero,
-        end = Offset(x * 1000f, y * 1000f),
-        tileMode = TileMode.Mirror
-    )
-}
-
 @Composable
 fun MenuButton(
     label: String,
     icon: ImageVector,
     onClick: () -> Unit,
-    highlight: Boolean = false
+    highlight: Boolean = false,
+    speed: Float = .7f // Speed of changing Border color Coloring
 ) {
     val borderColor = if (highlight) Color(0xFFFF6F00) else Color(0xFF444444)
     val contentColor = Color(0xFFFF6F00)
     val backgroundColor = Color(0xFF000000).copy(alpha = 0.5f)
 
-    // Procedural noise brush (no Offset needed)
-    val noiseBrush = remember {
-        Brush.linearGradient(
-            colors = listOf(
-                Color(0xFF2F2F2F),
-                Color(0xFF383838),
-                Color(0xFF2A2A2A),
-                Color(0xFF3E3E3E),
-                Color(0xFF323232)
-            ),
-            start = Offset.Zero,
-            end = Offset(800f, 300f), // ← rotation direction
-            tileMode = TileMode.Mirror
+    // Base tones (1–5)
+    val baseColors = listOf(
+        Color(0xFF2F2F2F),
+        Color(0xFF383838),
+        Color(0xFF2A2A2A),
+        Color(0xFF3E3E3E),
+        Color(0xFF323232)
+    )
+
+    // Each button gets its own random phase
+    val seed = remember { Random.nextFloat() }
+
+    // Adjusted duration based on speed
+    val duration = (6000f / speed).toInt().coerceAtLeast(200)
+
+    // Animate 0→1→0→1 (ping-pong)
+    val transition = rememberInfiniteTransition()
+    val tRaw by transition.animateFloat(
+        initialValue = seed,
+        targetValue = seed + 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(duration, easing = LinearEasing)
         )
-    }
+    )
 
+    // Ping-pong 0→1→0
+    val t = (tRaw % 1f).let { if (it < 0.5f) it * 2f else (1f - it) * 2f }
 
+    // Map t to index 0→4→0
+    val maxIndex = baseColors.size - 1
+    val pos = t * maxIndex
+    val index = pos.toInt()
+    val frac = pos - index
+
+    val c1 = baseColors[index]
+    val c2 = baseColors[(index + 1).coerceAtMost(maxIndex)]
+
+    // Smooth blend between c1 and c2
+    val blended = Color(
+        red = c1.red * (1 - frac) + c2.red * frac,
+        green = c1.green * (1 - frac) + c2.green * frac,
+        blue = c1.blue * (1 - frac) + c2.blue * frac,
+        alpha = 1f
+    )
+
+    // Build gradient using blended color as highlight
+    val noiseBrush = Brush.linearGradient(
+        colors = listOf(
+            baseColors[0],
+            blended,
+            baseColors[2],
+            blended,
+            baseColors[4]
+        ),
+        start = Offset.Zero,
+        end = Offset(800f, 300f),
+        tileMode = TileMode.Mirror
+    )
 
     OutlinedButton(
         onClick = onClick,
@@ -526,7 +632,7 @@ fun MenuButton(
             containerColor = backgroundColor,
             contentColor = contentColor
         ),
-        border = BorderStroke(0.dp, Color.Transparent), // we draw our own border
+        border = BorderStroke(0.dp, Color.Transparent),
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -536,14 +642,12 @@ fun MenuButton(
                 val strokeWidth = 3.dp.toPx()
 
                 if (highlight) {
-                    // Clean bright border
                     drawRoundRect(
                         color = borderColor,
                         cornerRadius = CornerRadius(radius),
                         style = Stroke(width = strokeWidth)
                     )
                 } else {
-                    // Textured / scattered border
                     drawRoundRect(
                         brush = noiseBrush,
                         cornerRadius = CornerRadius(radius),
