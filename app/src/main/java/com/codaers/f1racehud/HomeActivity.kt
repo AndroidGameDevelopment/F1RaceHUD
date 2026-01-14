@@ -519,9 +519,10 @@ fun HomeScreen(
                         HorizontalDivider(color = Color.Gray)
 
                         // Copyright / Footer
+                        val currentYear = java.time.Year.now().value
                         Text(
                             text = buildAnnotatedString {
-                                append("© 2025 ")
+                                append("© $currentYear ")
 
                                 withStyle(
                                     style = SpanStyle(

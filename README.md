@@ -1,5 +1,5 @@
 
-<img align="left" width="128" height="128" src="https://github.com/AndroidGameDevelopment/F1RaceHUD/blob/main/app/src/main/ic_launcher-playstore.png?raw=true">
+<img align="left" width="128" height="128" src="https://github.com/AndroidGameDevelopment/F1RaceHUD/blob/main/app/src/main/ic_launcher-playstore.png?raw=true" alt="F1 Race HUD">
 <br>  
 
 # F1 Race HUD
