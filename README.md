@@ -1,7 +1,7 @@
 
 <img align="left" width="128" height="128" src="https://github.com/AndroidGameDevelopment/F1RaceHUD/blob/main/app/src/main/ic_launcher-playstore.png?raw=true" alt="F1 Race HUD">
 <br>  
-
+  
 # F1 Race HUD
 F1RaceHUD is a modern, real‑time telemetry companion for F1 23, F1 24, and F1 25 games.  
 Attach your phone to your wheel or cockpit and get a clean, fast, and responsive HUD while driving. The app receives telemetry directly from the game using the official F1 UDP stream and displays detailed, motorsport‑authentic dashboards with all available data.
