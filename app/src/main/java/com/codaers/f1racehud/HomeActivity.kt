@@ -79,6 +79,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.animation.core.animateFloatAsState
 import kotlinx.coroutines.delay
 import androidx.compose.animation.core.snap
+import androidx.compose.foundation.border
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.TransformOrigin
 
@@ -394,13 +395,13 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = "F1 Telemetry Setup",
+                            text = "F1 Game Telemetry Setup",
                             color = Color.White,
                             style = MaterialTheme.typography.headlineSmall
                         )
 
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text("1. Open F1 → Settings → Telemetry.", color = Color.White)
+                            Text("1. Open F1 Game → Settings → Telemetry.", color = Color.White)
                             Text("2. Set UDP Mode = Enabled.", color = Color.White)
 
                             Column(
@@ -411,7 +412,7 @@ fun HomeScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "3. Enter your device’s IP address: ",
+                                        text = "3. Enter your device’s IP address:",
                                         color = Color.White
                                     )
                                 }
@@ -432,10 +433,41 @@ fun HomeScreen(
                                 }
                             }
 
-
                             Text("4. Set Port = 20777.", color = Color.White)
                             Text("5. Choose Frequency = 60Hz or 120Hz.", color = Color.White)
                             Text("6. Save and return to the game.", color = Color.White)
+
+                            // ⚠️ Subtle F1‑style warning box
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        color = Color(0xFF2A2A2A), // dark carbon-like gray
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFB00000), // thin F1 red accent
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Warning,
+                                    contentDescription = null,
+                                    tint = Color(0xFFFFD966) // soft yellow, not aggressive
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Text(
+                                    text = "For telemetry to work, the F1 game and your mobile device must be on the same network.",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+
                         }
 
                         Button(
@@ -450,6 +482,7 @@ fun HomeScreen(
                     }
                 }
             }
+
         }
         val scrollState = rememberScrollState()
 
@@ -508,10 +541,11 @@ fun HomeScreen(
 
                         // Generic About Text
                         Text(
-                            text = "F1 Race HUD provides live race data, " +
-                                    "performance insights, and real-time overlays.\n\n" +
+                            text = "F1 Race HUD provides live in‑game race data, " +
+                                    "performance insights, and real‑time overlays.\n\n" +
+                                    "Designed specifically for the F1 Game.\n" +
                                     "Developed with passion for motorsport.",
-                            color = Color.White,
+                                    color = Color.White,
                             style = MaterialTheme.typography.bodyMedium,
                             textAlign = TextAlign.Center
                         )

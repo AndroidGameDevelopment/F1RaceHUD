@@ -6,7 +6,7 @@ import android.util.Log
 
 import java.nio.ByteOrder
 
-// Packet IDs from F1 23 spec
+// Packet IDs from F1 25 spec
 const val PACKET_ID_MOTION: UByte = 0u
 const val PACKET_ID_SESSION: UByte = 1u
 const val PACKET_ID_LAP_DATA: UByte = 2u
@@ -21,8 +21,8 @@ const val PACKET_ID_CAR_DAMAGE: UByte = 10u
 const val PACKET_ID_SESSION_HISTORY: UByte = 11u
 const val PACKET_ID_TYRE_SETS: UByte = 12u
 const val PACKET_ID_MOTION_EX: UByte = 13u
-const val PACKET_ID_TIME_TRIAL: UByte = 14u   // ✅ NEW in F1 24
-
+const val PACKET_ID_TIME_TRIAL: UByte = 14u
+const val PACKET_ID_LAP_POSITIONS: UByte = 15u
 
 
 object F1Parser25 {
@@ -122,6 +122,14 @@ object F1Parser25 {
                     "TimeTrial → PlayerBest=${packet.playerSessionBestDataSet.lapTimeInMS}ms, " +
                             "PersonalBest=${packet.personalBestDataSet.lapTimeInMS}ms, " +
                             "Rival=${packet.rivalDataSet.lapTimeInMS}ms"
+                )
+                packet
+            }
+            PACKET_ID_LAP_POSITIONS -> {
+                val packet = parseLapPositions(buffer, header)
+                Log.d(
+                    "F1Parser",
+                    "LapPositions → numLaps=${packet.numLaps}, lapStart=${packet.lapStart}"
                 )
                 packet
             }

@@ -1,14 +1,14 @@
 [versions]
-agp = "8.13.2"
-kotlin = "2.3.0"
+agp = "9.0.1"
+kotlin = "2.3.10"
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycle = "2.10.0"
-activity = "1.12.2"
-composeBom = "2025.12.01"
-navigation = "2.9.6"
+activity = "1.12.4"
+composeBom = "2026.02.00"
+navigation = "2.9.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,7 +28,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 # Google Fonts (NO VERSION — BOM controls it)
-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.10.0" }
+google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.10.1" }
 
 # Navigation
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }

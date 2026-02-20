@@ -3,8 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
 }
 
 android {
@@ -17,8 +22,8 @@ android {
         applicationId = "com.codaers.f1racehud"
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.0.0"
+        versionCode = 4
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,7 +31,6 @@ android {
     signingConfigs {
         create("release")
     }
-
 
     buildTypes {
         getByName("release") {
@@ -43,7 +47,7 @@ android {
                 keyPass != null
             ) {
                 signingConfig = signingConfigs.getByName("release").apply {
-                    storeFile = file(storeFilePath!!)
+                    storeFile = file(storeFilePath)
                     storePassword = storePass
                     keyAlias = keyAliasValue
                     keyPassword = keyPass
@@ -66,11 +70,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
     }
 
     buildFeatures {

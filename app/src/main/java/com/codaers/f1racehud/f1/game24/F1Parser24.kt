@@ -6,7 +6,7 @@ import android.util.Log
 
 import java.nio.ByteOrder
 
-// Packet IDs from F1 23 spec
+// Packet IDs from F1 24 spec
 const val PACKET_ID_MOTION: UByte = 0u
 const val PACKET_ID_SESSION: UByte = 1u
 const val PACKET_ID_LAP_DATA: UByte = 2u
@@ -22,7 +22,6 @@ const val PACKET_ID_SESSION_HISTORY: UByte = 11u
 const val PACKET_ID_TYRE_SETS: UByte = 12u
 const val PACKET_ID_MOTION_EX: UByte = 13u
 const val PACKET_ID_TIME_TRIAL: UByte = 14u   // ✅ NEW in F1 24
-
 
 
 object F1Parser24 {
