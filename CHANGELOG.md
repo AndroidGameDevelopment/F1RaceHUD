@@ -1,8 +1,8 @@
 ## v1.0.3 
-- Updated gradle 9.0.1
+- Updated gradle 9.1.0
 - kotlin 2.3.10
-- activity = "1.12.4"
-- composeBom = "2026.02.00"
+- activity = "1.13.0"
+- composeBom = "2026.03.00"
 - navigation = "2.9.7"
 - 
 - Updated Settings instructions
