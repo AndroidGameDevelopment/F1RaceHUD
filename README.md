@@ -62,5 +62,5 @@ To build the project from source, follow these steps:
 # 📦 Installation
 
 ### From Google Play (recommended)
-Download the latest version of F1 Race HUB directly from the [Google Play Store](https://play.google.com/store/apps/details?id=com.codaers.f1racehub).
+Download the latest version of F1 Race HUB directly from the [Google Play Store](https://play.google.com/store/apps/details?id=com.codaers.f1racehud).
     
