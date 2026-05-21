@@ -1,3 +1,8 @@
+## v1.0.4 - Ongoing
+- Upgrade Android Gradle 9.2.1
+- Upgraded dependencies
+
+
 ## v1.0.3 
 - Updated gradle 9.1.0
 - kotlin 2.3.10
