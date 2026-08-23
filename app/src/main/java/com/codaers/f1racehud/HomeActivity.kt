@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.withStyle
+import kotlin.time.Duration.Companion.milliseconds
 
 
 import androidx.compose.foundation.layout.*
@@ -191,6 +192,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .displayCutoutPadding()
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -205,9 +207,9 @@ fun HomeScreen(
             LaunchedEffect(Unit) {
                 while (true) {
                     start = false
-                    delay(10)
+                    delay(10.milliseconds)
                     start = true
-                    delay(intervalMillis)
+                    delay(intervalMillis.milliseconds)
                 }
             }
 

@@ -1,7 +1,13 @@
 ## v1.0.4 - Ongoing
-- Upgrade Android Gradle 9.2.1
+- Upgrade Android Gradle 9.3.1
 - Upgraded dependencies
-
+- kotlin = 2.4.10
+- coreKtx = 1.19.0
+- lifecycle = 2.11.0
+- composeBom = 2026.08.00
+- Google Fonts version = 1.12.0
+- gradle-9.7.1
+- added .displayCutoutPadding() on homescreen
 
 ## v1.0.3 
 - Updated gradle 9.1.0
