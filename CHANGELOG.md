@@ -8,6 +8,7 @@
 - Google Fonts version = 1.12.0
 - gradle-9.7.1
 - added .displayCutoutPadding() on homescreen
+- Support Android 17
 
 ## v1.0.3 
 - Updated gradle 9.1.0
