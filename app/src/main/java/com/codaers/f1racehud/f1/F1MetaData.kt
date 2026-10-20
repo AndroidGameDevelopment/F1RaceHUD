@@ -196,7 +196,50 @@ object F1Metadata {
         137 to "Van Amersfoort Racing ‘22",
         138 to "Trident ‘22",
         139 to "Hitech ‘22",
-        140 to "Art GP ‘22"
+        140 to "Art GP ‘22",
+
+        // -------------------------
+        // F1 2025
+        // -------------------------
+        465 to "Art GP ‘25",
+        466 to "Campos ‘25",
+        467 to "Rodin Motorsport ‘25",
+        468 to "AIX Racing ‘25",
+        469 to "DAMS ‘25",
+        470 to "Hitech ‘25",
+        471 to "MP Motorsport ‘25",
+        472 to "Prema ‘25",
+        473 to "Trident ‘25",
+        474 to "Van Amersfoort Racing ‘25",
+        475 to "Invicta ‘25",
+
+        // -------------------------
+        // F1 2026
+        // -------------------------
+        476 to "Mercedes ‘26",
+        477 to "Ferrari ‘26",
+        478 to "Red Bull Racing ‘26",
+        479 to "Williams ‘26",
+        480 to "Aston Martin ‘26",
+        481 to "Alpine ‘26",
+        482 to "RB ‘26",
+        483 to "Haas ‘26",
+        484 to "McLaren ‘26",
+        485 to "Audi ‘26",
+        486 to "Cadillac ‘26",
+        487 to "",
+        488 to "",
+        489 to "Art GP ‘26",
+        490 to "Campos ‘26",
+        491 to "Rodin Motorsport ‘26",
+        492 to "AIX Racing ‘26",
+        493 to "DAMS ‘26",
+        494 to "Hitech ‘26",
+        495 to "MP Motorsport ‘26",
+        496 to "Prema ‘26",
+        497 to "Trident ‘26",
+        498 to "Van Amersfoort Racing ‘26",
+        499 to "Invicta ‘26"
     )
 
 
@@ -376,7 +419,30 @@ object F1Metadata {
         173 to "Jenson Button",
         174 to "David Coulthard",
         175 to "Oscar Piastri",
-        185 to "Liam Lawson"
+
+        185 to "Luca Cortez",
+        186 to "Luke Browning",
+        187 to "Cian Shields",
+        188 to "Arvid Lindblad",
+        189 to "Dino Beganovic",
+        190 to "Leonardo Fornaroli",
+        191 to "Oliver Goethe",
+        192 to "Gabriele Minì",
+        193 to "Sebastián Montoya",
+        194 to "Alexander Dunne",
+        195 to "Max Esterson",
+        196 to "Sami Meguetounif",
+        197 to "John Bennett",
+        198 to "Emerson Fittipaldi",
+        199 to "Tasanopol Inthraphuvasak",
+        200 to "Noel León",
+        201 to "Roman Bilinski",
+        202 to "Colton Herta",
+        203 to "Rafael Câmara",
+        204 to "Mari Boya",
+        205 to "Martinius Stenshorne",
+        206 to "Laurens van Hoepen",
+        207 to "Nico Varrone"
         )
 
     fun driverName(id: Int): String = drivers[id] ?: "Unknown ($id)"
@@ -421,7 +487,8 @@ object F1Metadata {
         32 to "Losail",
         39 to "Silverstone (Reverse)",
         40 to "Austria (Reverse)",
-        41 to "Zandvoort (Reverse)"
+        41 to "Zandvoort (Reverse)",
+        42 to "Madrid"
         )
 
     fun trackName(id: Int): String = tracks[id] ?: "Unknown ($id)"
@@ -597,7 +664,8 @@ object F1Metadata {
         8 to "Autocross",
         9 to "Drift",
         10 to "Average Speed Zone",
-        11 to "Rival Duel"
+        11 to "Rival Duel",
+        12 to "Elimination"
     )
 
     fun rulesetName(id: Int): String = rulesets[id] ?: "Unknown ($id)"

@@ -23,6 +23,7 @@ const val PACKET_ID_TYRE_SETS: UByte = 12u
 const val PACKET_ID_MOTION_EX: UByte = 13u
 const val PACKET_ID_TIME_TRIAL: UByte = 14u
 const val PACKET_ID_LAP_POSITIONS: UByte = 15u
+const val PACKET_ID_CAR_TELEMETRY_2: UByte = 16u
 
 
 object F1Parser26 {
@@ -133,6 +134,14 @@ object F1Parser26 {
                 )
                 packet
             }
+            PACKET_ID_CAR_TELEMETRY_2 -> {
+                val packet = parseCarTelemetry2(buffer, header)
+                val player = packet.carTelemetry2Data[header.playerCarIndex.toInt()]
+                Log.d(
+                    "F1Parser",
+                    "Telemetry2 → AeroMode=${player.activeAeroMode}, OvertakeActive=${player.overtakeActive}")
+                packet
+            }
             else -> {
                 Log.w("F1Parser", "Unhandled packet ${header.packetId}")
                 null
@@ -183,6 +192,37 @@ object F1Parser26 {
             mfdPanelIndexSecondaryPlayer = mfdPanelIndexSecondaryPlayer,
             suggestedGear = suggestedGear
         )
+    }
+
+    private fun parseCarTelemetry2(buffer: ByteBuffer, header: PacketHeader): PacketCarTelemetry2Data {
+        buffer.order(ByteOrder.LITTLE_ENDIAN)
+        val cars = mutableListOf<CarTelemetry2Data>()
+
+        repeat(22) {
+            val activeAeroMode = buffer.get().toUByte()
+            val activeAeroAvailable = buffer.get().toUByte()
+            val activeAeroActivationDistance = buffer.short.toUShort()
+            val overtakeAvailable = buffer.get().toUByte()
+            val overtakeActive = buffer.get().toUByte()
+            val overtakeActivationDistance = buffer.short.toUShort()
+            val regulations2026 = buffer.get().toUByte()
+            val drivingWrongWay = buffer.get().toUByte()
+
+            cars.add(
+                CarTelemetry2Data(
+                    activeAeroMode,
+                    activeAeroAvailable,
+                    activeAeroActivationDistance,
+                    overtakeAvailable,
+                    overtakeActive,
+                    overtakeActivationDistance,
+                    regulations2026,
+                    drivingWrongWay
+                )
+            )
+        }
+
+        return PacketCarTelemetry2Data(header, cars)
     }
 
     private fun parseLapData(buffer: ByteBuffer, header: PacketHeader): PacketLapData {

@@ -511,12 +511,6 @@ data class LapHistoryData(
     val lapValidBitFlags: UByte      // uint8
 )
 
-data class TyreStintHistoryData(
-    val endLap: UByte,              // uint8
-    val tyreActualCompound: UByte,  // uint8
-    val tyreVisualCompound: UByte   // uint8
-)
-
 data class PacketSessionHistoryData(
     val header: PacketHeader,
     val carIndex: UByte,
@@ -528,6 +522,13 @@ data class PacketSessionHistoryData(
     val bestSector3LapNum: UByte,
     val lapHistoryData: List<LapHistoryData>,       // up to 100
     val tyreStintsHistoryData: List<TyreStintHistoryData> // up to 8
+)
+
+// ---------------- Packet 12: Extended tyre set data ----------------
+data class TyreStintHistoryData(
+    val endLap: UByte,              // uint8
+    val tyreActualCompound: UByte,  // uint8
+    val tyreVisualCompound: UByte   // uint8
 )
 
 data class TyreSetData(
@@ -548,6 +549,8 @@ data class PacketTyreSetsData(
     val tyreSetData: List<TyreSetData>, // always 20 entries
     val fittedIdx: UByte
 )
+
+// ---------------- Packet 13: Extended motion data for player car ----------------
 
 data class PacketMotionExData(
     val header: PacketHeader,
@@ -589,6 +592,7 @@ data class PacketMotionExData(
     val wheelCamberGain: List<Float>          // NEW in 25, 4 floats
 )
 
+// ---------------- Packet 14: Time Trial specific data ----------------
 data class TimeTrialDataSet(
     val carIdx: UByte,                 // Index of the car this data relates to (uint8)
     val teamId: UByte,                 // Team id - see appendix (uint8)
@@ -612,6 +616,8 @@ data class PacketTimeTrialData(
     val rivalDataSet: TimeTrialDataSet                // Rival data set
 )
 
+// ---------------- Packet 15: Lap positions on each lap so a chart can be constructed ----------------
+
 data class PacketLapPositionsData(
     val header: PacketHeader,                     // Header
     val numLaps: UByte,                           // Number of laps in the data
@@ -620,7 +626,7 @@ data class PacketLapPositionsData(
 )
 
 // new in 2026
-// ---------------- Packet 14: Car Telemetry 2 ----------------
+// ---------------- Packet 16: Car Telemetry 2 ----------------
 data class CarTelemetry2Data(
     val activeAeroMode: UByte,                   // 0 = Corner mode, 1 = Straight mode
     val activeAeroAvailable: UByte,              // 0 = not available, 1 = available
