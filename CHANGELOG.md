@@ -1,4 +1,15 @@
-## v1.0.4 - Ongoing
+## v1.0.5 - Ongoing
+- Upgrade Android Gradle plugin 9.4.1
+- distributionURL gradle-9.8.2
+- Upgraded dependencies
+- kotlin = 2.4.21
+- coreKtx = 1.19.1
+- composeBom = 2026.09.00
+- navigation = 2.10.2
+- google-fonts version = "1.12.1"
+
+
+## v1.0.4
 - Upgrade Android Gradle 9.3.1
 - Upgraded dependencies
 - kotlin = 2.4.10
