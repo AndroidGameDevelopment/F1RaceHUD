@@ -7,6 +7,7 @@ import android.util.Log
 import com.codaers.f1racehud.f1.game23.F1Parser23
 import com.codaers.f1racehud.f1.game24.F1Parser24
 import com.codaers.f1racehud.f1.game25.F1Parser25
+import com.codaers.f1racehud.f1.game26.F1Parser26
 
 object F1Parser {
 
@@ -44,6 +45,7 @@ object F1Parser {
             2023 -> F1Parser23.parse(buffer, header)
             2024 -> F1Parser24.parse(buffer, header)
             2025 -> F1Parser25.parse(buffer, header)
+            2026 -> F1Parser26.parse(buffer, header)
             else -> {
                 Log.w("F1Parser", "Unsupported packetFormat=${header.packetFormat}")
                 null
