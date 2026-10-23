@@ -7,6 +7,8 @@
 - composeBom = 2026.09.00
 - navigation = 2.10.2
 - google-fonts version = "1.12.1"
+- Added @Preview on all screens
+- Added numActiveCars in GlobalState.kt
 
 
 ## v1.0.4

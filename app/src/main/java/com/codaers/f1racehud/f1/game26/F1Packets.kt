@@ -363,22 +363,22 @@ data class PacketCarSetupData(
 
 // ---------------- Packet 6: Car Telemetry ----------------
 data class CarTelemetryData(
-    val speed: UShort,                     // uint16
-    val throttle: Float,                   // float
-    val steer: Float,                      // float
-    val brake: Float,                      // float
-    val clutch: UByte,                     // uint8
-    val gear: Byte,                        // int8
-    val engineRPM: UShort,                 // uint16
-    val drs: UByte,                        // uint8
-    val revLightsPercent: UByte,           // uint8
-    val revLightsBitValue: UShort,         // uint16
-    val brakesTemperature: List<UShort>,   // 4 x uint16
-    val tyresSurfaceTemperature: List<UByte>, // 4 x uint8
-    val tyresInnerTemperature: List<UByte>,   // 4 x uint8
-    val engineTemperature: UShort,         // uint16
-    val tyresPressure: List<Float>,        // 4 x float
-    val surfaceType: List<UByte>           // 4 x uint8
+    val speed: UShort,                          // uint16
+    val throttle: Float,                        // float
+    val steer: Float,                           // float
+    val brake: Float,                           // float
+    val clutch: UByte,                          // uint8
+    val gear: Byte,                             // int8
+    val engineRPM: UShort,                      // uint16
+    val drs: UByte,                             // uint8
+    val revLightsPercent: UByte,                // uint8
+    val revLightsBitValue: UShort,              // uint16
+    val brakesTemperature: List<UShort>,        // 4 x uint16
+    val tyresSurfaceTemperature: List<UByte>,   // 4 x uint8
+    val tyresInnerTemperature: List<UByte>,     // 4 x uint8
+    val engineTemperature: UShort,              // uint16
+    val tyresPressure: List<Float>,             // 4 x float
+    val surfaceType: List<UByte>                // 4 x uint8
 )
 
 data class PacketCarTelemetryData(

@@ -152,5 +152,13 @@ object F1FormatterWrapper {
             else -> null
         }
 
+    fun formatCarTelemetry2(version: Int, packet: Any?): String? =
+        when (version) {
+            2023 -> null   // F1 23 does NOT have Car telemetry 2 packet
+            2024 -> null   // F1 24 does NOT have telemetry 2 packet
+            2025 -> null   // F1 25 does NOT have telemetry 2 packet
+            2026 -> F1Formatters26.formatCarTelemetry2(packet as com.codaers.f1racehud.f1.game26.PacketCarTelemetry2Data)
+            else -> null
+        }
 
 }

@@ -74,7 +74,7 @@ object F1Parser {
 
 // Header is version‑agnostic → belongs here
 data class PacketHeader(
-    val packetFormat: UShort,            // 2 bytes - 2023, 2024, 2025
+    val packetFormat: UShort,            // 2 bytes - 2023, 2024, 2025, 2026
     val gameYear: UByte,                 // 1 byte  - Game year - last two digits e.g. 25
     val gameMajorVersion: UByte,         // 1 byte  - Game major version - "X.00"
     val gameMinorVersion: UByte,         // 1 byte  - Game minor version - "1.XX"

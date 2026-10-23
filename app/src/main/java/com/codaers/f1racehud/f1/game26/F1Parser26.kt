@@ -3,6 +3,7 @@ package com.codaers.f1racehud.f1.game26
 import com.codaers.f1racehud.PacketHeader
 import java.nio.ByteBuffer
 import android.util.Log
+import com.codaers.f1racehud.GlobalState
 
 import java.nio.ByteOrder
 
@@ -153,7 +154,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val cars = mutableListOf<CarTelemetryData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val speed = buffer.short.toUShort()
             val throttle = buffer.float
             val steer = buffer.float
@@ -198,7 +199,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val cars = mutableListOf<CarTelemetry2Data>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val activeAeroMode = buffer.get().toUByte()
             val activeAeroAvailable = buffer.get().toUByte()
             val activeAeroActivationDistance = buffer.short.toUShort()
@@ -229,7 +230,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val laps = mutableListOf<LapData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val lastLapTimeInMS = buffer.int.toUInt()
             val currentLapTimeInMS = buffer.int.toUInt()
 
@@ -549,7 +550,7 @@ object F1Parser26 {
     private fun parseMotion(buffer: ByteBuffer, header: PacketHeader): PacketMotionData {
         val cars = mutableListOf<CarMotionData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val worldPositionX = buffer.float
             val worldPositionY = buffer.float
             val worldPositionZ = buffer.float
@@ -723,6 +724,12 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
 
         val numActiveCars = buffer.get().toUByte()
+
+        // Update only if the value has actually changed
+        if (GlobalState.numActiveCars.value != numActiveCars.toInt()) {
+            GlobalState.numActiveCars.value = numActiveCars.toInt()
+        }
+
         val participants = mutableListOf<ParticipantData>()
 
         repeat(numActiveCars.toInt()) {
@@ -781,7 +788,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val setups = mutableListOf<CarSetupData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val frontWing = buffer.get().toUByte()
             val rearWing = buffer.get().toUByte()
             val onThrottle = buffer.get().toUByte()
@@ -813,7 +820,7 @@ object F1Parser26 {
                     frontSuspension, rearSuspension,
                     frontAntiRollBar, rearAntiRollBar,
                     frontSuspensionHeight, rearSuspensionHeight,
-                    brakePressure, brakeBias, engineBraking,          // ✅ inserted here
+                    brakePressure, brakeBias, engineBraking,
                     rearLeftTyrePressure, rearRightTyrePressure,
                     frontLeftTyrePressure, frontRightTyrePressure,
                     ballast, fuelLoad
@@ -830,7 +837,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val statuses = mutableListOf<CarStatusData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val tractionControl = buffer.get().toUByte()
             val antiLockBrakes = buffer.get().toUByte()
             val fuelMix = buffer.get().toUByte()
@@ -935,7 +942,7 @@ object F1Parser26 {
             val nationality = buffer.get().toUByte()
             val platform = buffer.get().toUByte()
 
-            val nameBytes = ByteArray(32)   // ✅ F1 26 uses 32 bytes
+            val nameBytes = ByteArray(32)   // ✅ F1 25 uses 32 bytes
             buffer.get(nameBytes)
             val name = nameBytes.toString(Charsets.UTF_8).trimEnd('\u0000')
 
@@ -968,7 +975,7 @@ object F1Parser26 {
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         val damages = mutableListOf<CarDamageData>()
 
-        repeat(22) {
+        repeat(GlobalState.numActiveCars.value) {
             val tyresWear = List(4) { buffer.float }
             val tyresDamage = List(4) { buffer.get().toUByte() }
             val brakesDamage = List(4) { buffer.get().toUByte() }
@@ -1160,9 +1167,9 @@ object F1Parser26 {
         val rearRollAngle = buffer.float
         val chassisYaw = buffer.float
 
-        val chassisPitch = buffer.float                 // ✅ NEW in 26
-        val wheelCamber = readFloatArray(4)             // ✅ NEW in 26
-        val wheelCamberGain = readFloatArray(4)         // ✅ NEW in 26
+        val chassisPitch = buffer.float                     // ✅ NEW in 25
+        val wheelCamber = readFloatArray(4)         // ✅ NEW in 25
+        val wheelCamberGain = readFloatArray(4)     // ✅ NEW in 25
 
         return PacketMotionExData(
             header,
@@ -1250,9 +1257,9 @@ object F1Parser26 {
         val numLaps = buffer.get().toUByte()
         val lapStart = buffer.get().toUByte()
 
-        // 50 laps × 22 cars
+        // 50 laps × GlobalState.numActiveCars.value cars
         val positionMatrix = List(50) {
-            List(22) { buffer.get().toUByte() }
+            List(GlobalState.numActiveCars.value) { buffer.get().toUByte() }
         }
 
         return PacketLapPositionsData(

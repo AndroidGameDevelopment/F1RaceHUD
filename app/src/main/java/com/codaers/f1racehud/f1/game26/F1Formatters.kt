@@ -10,8 +10,6 @@ object F1Formatters {
     fun formatParticipants(p: PacketParticipantsData) = formatParticipants26(p)
     fun formatCarSetups(p: PacketCarSetupData) = formatCarSetups26(p)
     fun formatCarTelemetry(p: PacketCarTelemetryData) = formatCarTelemetry26(p)
-
-    fun formatCarTelemetry2(p: PacketCarTelemetry2Data) = formatCarTelemetry2_26(p)
     fun formatCarStatus(p: PacketCarStatusData) = formatCarStatus26(p)
     fun formatFinalClassification(p: PacketFinalClassificationData) = formatFinalClassification26(p)
     fun formatLobbyInfo(p: PacketLobbyInfoData) = formatLobbyInfo26(p)
@@ -21,7 +19,7 @@ object F1Formatters {
     fun formatMotionEx(p: PacketMotionExData) = formatMotionEx26(p)
     fun formatTimeTrial(p: PacketTimeTrialData) = formatTimeTrial26(p)
     fun formatLapPositions(p: PacketLapPositionsData) = formatLapPositions26(p)
-
+    fun formatCarTelemetry2(p: PacketCarTelemetry2Data) = formatCarTelemetry2_26(p)
 }
 
 // Motion Data (ID 0)

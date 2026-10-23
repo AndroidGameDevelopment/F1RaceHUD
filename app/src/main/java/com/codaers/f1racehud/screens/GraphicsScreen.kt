@@ -27,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 
 import com.codaers.f1racehud.TelemetryViewModel
 import com.codaers.f1racehud.f1car.F1DIFFUSER
@@ -54,7 +55,6 @@ import com.codaers.f1racehud.ui.theme.OrbitronMono
 
 @Composable
 fun GraphicsScreen(viewModel: TelemetryViewModel) {
-
     var lapTimeMs by remember { mutableIntStateOf(0) }
     var deltaCarInFrontMS by remember { mutableStateOf<Float?>(null) }
     var playerPosition by remember { mutableIntStateOf(0) }
@@ -143,9 +143,79 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
         }
     }
 
+    GraphicsContent(
+        lapTimeMs = lapTimeMs,
+        deltaCarInFrontMS = deltaCarInFrontMS,
+        playerPosition = playerPosition,
+        currentLap = currentLap,
+        penalties = penalties,
+        totalWarnings = totalWarnings,
+        cornerCuttingWarnings = cornerCuttingWarnings,
+        numUnservedDriveThroughPens = numUnservedDriveThroughPens,
+        numUnservedStopGoPens = numUnservedStopGoPens,
+        totalLaps = totalLaps,
+        gear = gear,
+        drs = drs,
+        drsAllowed = drsAllowed,
+        drsComing = drsComing,
+        ersPercent = ersPercent,
+        ersMode = ersMode,
+        fuelRemainingLaps = fuelRemainingLaps,
+        flWear = flWear,
+        flDamage = flDamage,
+        frWear = frWear,
+        frDamage = frDamage,
+        rlWear = rlWear,
+        rlDamage = rlDamage,
+        rrWear = rrWear,
+        rrDamage = rrDamage,
+        flWing = flWing,
+        frWing = frWing,
+        rearWing = rearWing,
+        floorDamage = floorDamage,
+        diffuserDamage = diffuserDamage,
+        sidepodDamage = sidepodDamage
+    )
+}
+
+@Composable
+fun GraphicsContent(
+    lapTimeMs: Int,
+    deltaCarInFrontMS: Float?,
+    playerPosition: Int,
+    currentLap: Int,
+    penalties: Int,
+    totalWarnings: Int,
+    cornerCuttingWarnings: Int,
+    numUnservedDriveThroughPens: Int,
+    numUnservedStopGoPens: Int,
+    totalLaps: Int,
+    gear: Int,
+    drs: Int,
+    drsAllowed: Int,
+    drsComing: Int,
+    ersPercent: Int,
+    ersMode: Int,
+    fuelRemainingLaps: Float,
+    flWear: Int,
+    flDamage: Int,
+    frWear: Int,
+    frDamage: Int,
+    rlWear: Int,
+    rlDamage: Int,
+    rrWear: Int,
+    rrDamage: Int,
+    flWing: Int,
+    frWing: Int,
+    rearWing: Int,
+    floorDamage: Int,
+    diffuserDamage: Int,
+    sidepodDamage: Int
+) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Black)
             .padding(start = 2.dp, end = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
@@ -326,7 +396,6 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
         ) {
             Text(
                 text = formatLap(lapTimeMs),
-                //text = "01:21:567",
                 style = MaterialTheme.typography.headlineMedium.copy(fontFamily = OrbitronMono, fontSize = 48.sp),
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 0.dp)
@@ -351,8 +420,6 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
                     StatusBadge(
                         text = "🕒 +${penalties}s",
                         active = penalties > 0
-                        //text = "🕒 +12s",
-                        //active = true
                     )
 
                     // ⚠️ Total warnings
@@ -394,7 +461,6 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
             ) {
                 Text(
                     text = "$ersPercent%  ${ersModeName(ersMode)}",
-                    //text = "100%  OVERTAKE",
                     color = Color.Yellow    ,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontSize = 28.sp,
@@ -435,7 +501,7 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
 
             // ───────────────────────────────
             // GAP TO CAR AHEAD
-            // ───────────────────────────────
+            // ───────────────────────────────────────────────
             val (gapText, gapFontSize, gapFont) = when (deltaCarInFrontMS) {
                 null -> Triple("No car ahead", 30.sp, Orbitron)
                 else -> Triple("+${"%.3f".format(deltaCarInFrontMS)} s", 40.sp, OrbitronMono)
@@ -464,7 +530,6 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
             // LAP COUNTER (added at bottom)
             Text(
                 text = "Lap $currentLap/$totalLaps",
-                //text = "Lap 22/28",
                 color = Color.White,
                 style = MaterialTheme.typography.headlineSmall.copy(fontFamily = Orbitron, fontSize = 38.sp),
                 modifier = Modifier.padding(bottom = 20.dp)
@@ -473,13 +538,13 @@ fun GraphicsScreen(viewModel: TelemetryViewModel) {
             // ───────────────────────────────
             // DRS SECTION
             // ───────────────────────────────
-            drsState = when {
+            val currentDrsState = when {
                 drs == 1 -> 2                         // ACTIVE
                 drsAllowed == 1 || drsComing > 0 -> 1 // AVAILABLE
                 else -> 0                             // OFF
             }
 
-            val (drsText, drsColor) = when (drsState) {
+            val (drsText, drsColor) = when (currentDrsState) {
                 2 -> "DRS ACTIVE" to Color.Green
                 1 -> "DRS READY" to Color.Yellow
                 else -> "DRS OFF" to Color.Gray
@@ -592,4 +657,47 @@ fun AnimatedGear(gear: Int) {
             scaleY = scale.value
         }
     )
+}
+
+@Preview(
+    name = "Default",
+    showBackground = true,
+    device = "spec:width=800dp,height=400dp")
+@Composable
+fun GraphicsScreenPreview() {
+    MaterialTheme {
+        GraphicsContent(
+            lapTimeMs = 121567,
+            deltaCarInFrontMS = 1.450f,
+            playerPosition = 3,
+            currentLap = 22,
+            penalties = 12,
+            totalWarnings = 2,
+            cornerCuttingWarnings = 1,
+            numUnservedDriveThroughPens = 0,
+            numUnservedStopGoPens = 0,
+            totalLaps = 28,
+            gear = 4,
+            drs = 1,
+            drsAllowed = 1,
+            drsComing = 5,
+            ersPercent = 85,
+            ersMode = 1,
+            fuelRemainingLaps = 12.45f,
+            flWear = 15,
+            flDamage = 0,
+            frWear = 12,
+            frDamage = 0,
+            rlWear = 20,
+            rlDamage = 0,
+            rrWear = 18,
+            rrDamage = 0,
+            flWing = 0,
+            frWing = 0,
+            rearWing = 0,
+            floorDamage = 0,
+            diffuserDamage = 0,
+            sidepodDamage = 0
+        )
+    }
 }

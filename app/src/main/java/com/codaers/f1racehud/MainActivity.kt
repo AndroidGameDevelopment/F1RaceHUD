@@ -162,6 +162,11 @@ fun DashboardScreen(viewModel: TelemetryViewModel) {
             add("Lap Positions")
         }
 
+        // Only add Lap Positions for 2025+
+        if ((version ?: 0) >= 2026) {
+            add("Car Telemetry 2")
+        }
+
     }
 
     // Collect latest packet from ViewModel
@@ -208,6 +213,11 @@ fun DashboardScreen(viewModel: TelemetryViewModel) {
                 // Lap Positions for 2025+
                 15 -> if (version >= 2025) {
                     F1FormatterWrapper.formatLapPositions(version, packet)
+                } else null
+
+                // Lap Positions for 2026+
+                16 -> if (version >= 2026) {
+                    F1FormatterWrapper.formatCarTelemetry2(version, packet)
                 } else null
 
                 else -> null

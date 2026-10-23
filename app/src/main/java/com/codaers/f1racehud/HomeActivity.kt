@@ -83,6 +83,8 @@ import androidx.compose.animation.core.snap
 import androidx.compose.foundation.border
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.tooling.preview.Preview
+import com.codaers.f1racehud.ui.theme.F1SimDashboardTheme
 
 
 val provider = GoogleFont.Provider(
@@ -161,13 +163,15 @@ fun HomeScreen(
     onF1DefaultClick: () -> Unit,
     onTelemetryClick: () -> Unit,
     onRaceHudClick: () -> Unit,
-    onExitClick: () -> Unit
+    onExitClick: () -> Unit,
+    showAbout: Boolean = false,
+    showInstructions: Boolean = false
 ) {
 
     val backgroundPainter = painterResource(id = R.drawable.home_background)
 
-    var showInstructions by remember { mutableStateOf(false) }
-    var showAbout by remember { mutableStateOf(false) }
+    var showInstructions by remember { mutableStateOf(showInstructions) }
+    var showAbout by remember { mutableStateOf(showAbout) }
     var selectedMenu by remember { mutableStateOf<String?>(null) }
 
     val deviceIp = remember { getLocalIp() }
@@ -378,6 +382,7 @@ fun HomeScreen(
                 }
             }
         }
+        val scrollState = rememberScrollState()
 
         if (showInstructions) {
             Box(
@@ -394,7 +399,8 @@ fun HomeScreen(
                         .padding(24.dp)
                 ) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.verticalScroll(scrollState)
                     ) {
                         Text(
                             text = "F1 Game Telemetry Setup",
@@ -486,7 +492,7 @@ fun HomeScreen(
             }
 
         }
-        val scrollState = rememberScrollState()
+
 
         if (showAbout) {
             Box(
@@ -726,6 +732,59 @@ fun getLocalIp(): String {
         }
     }
     return "Unknown"
+}
+
+@Preview(
+    name = "Landscape Mode",
+    showBackground = true,
+    device = "spec:width=800dp,height=400dp"
+)
+@Composable
+fun HomeScreenLandscapePreview() {
+    F1SimDashboardTheme {
+        HomeScreen(
+            onF1DefaultClick = {},
+            onTelemetryClick = {},
+            onRaceHudClick = {},
+            onExitClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "About Dialog",
+    showBackground = true,
+    device = "spec:width=800dp,height=400dp"
+)
+@Composable
+fun HomeScreenAboutPreview() {
+    F1SimDashboardTheme {
+        HomeScreen(
+            onF1DefaultClick = {},
+            onTelemetryClick = {},
+            onRaceHudClick = {},
+            onExitClick = {},
+            showAbout = true // <--- Pass true here
+        )
+    }
+}
+
+@Preview(
+    name = "Instructions Dialog",
+    showBackground = true,
+    device = "spec:width=800dp,height=400dp"
+)
+@Composable
+fun HomeScreenInstructionsPreview() {
+    F1SimDashboardTheme {
+        HomeScreen(
+            onF1DefaultClick = {},
+            onTelemetryClick = {},
+            onRaceHudClick = {},
+            onExitClick = {},
+            showInstructions = true // <--- Pass true here
+        )
+    }
 }
 
 
